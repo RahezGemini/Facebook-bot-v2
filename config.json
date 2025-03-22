@@ -1,0 +1,23 @@
+{
+  "name": "Facebook bot",
+  "prefix": "-",
+  "host": "114.5.213.36",
+  "port": "443",
+  "servetPort": "8080",
+  "language": "en",
+  "userAgent": "Mozilla/5.0 (Android 10; Mobile; rv:136.0) Gecko/136.0 Firefox/136.0",
+  "admin": [""],
+  "onlyAdmin": false,
+  "timezone": "asia/jakarta",
+  "config": {
+    "url": "",
+    "note_url":"Your url preview project"
+  },
+  "setting": {
+    "forcelogin": true,
+    "listenevents": true,
+    "updatepresence": true,
+    "listentyping": true,
+    "loglevel": "error"
+  }
+}

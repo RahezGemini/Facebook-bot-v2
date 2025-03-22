@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Register</h1>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Name" required>
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <select id="gender">
+        <option value="Pria">Pria</option>
+        <option value="Wanita">Wanita</option>
+      </select>
+      <input type="text" id="hobby" placeholder="Hobby" required>
+      </select>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login here</a></p>
+  </div>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const gender = document.getElementById('gender').value;
+      const hobby = document.getElementById('hobby').value;
+      const role = 0;
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, username, email, password, gender, hobby, role })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        window.location.href = '/login';
+      } else {
+        alert(data.message);
+      }
+    });
+  </script>
+</body>
+</html>

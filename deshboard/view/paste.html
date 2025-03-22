@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastebin</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+input[type="file"], input[type="text"] {
+    width: calc(100% - 22px);
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+pre {
+    background: #eee;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: auto;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pastebin</h1>
+        <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+        <button id="submitBtn">Submit Code</button>
+        <h2>Upload File</h2>
+        <input type="file" id="fileInput">
+        <button id="uploadBtn">Upload File</button>
+        <h2>Get Raw File</h2>
+        <input type="text" id="filenameInput" placeholder="Enter filename">
+        <button id="getFileBtn">Get Raw File</button>
+        <pre id="output"></pre>
+    </div>
+    <script>
+      document.getElementById('submitBtn').addEventListener('click', function() {
+        const code = document.getElementById('codeInput').value;
+        const url = `/api/paste?code=${encodeURIComponent(code)}`;
+        fetch(url, { method: 'POST' })
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('output').textContent = `Code submitted: ${data}`;
+          });
+      });
+      
+      document.getElementById('uploadBtn').addEventListener('click', function() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+      
+        fetch('/api/paste/files', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('output').textContent = `File uploaded: ${data}`;
+          });
+      });
+      
+      document.getElementById('getFileBtn').addEventListener('click', function() {
+        const filename = document.getElementById('filenameInput').value;
+        const url = `/api/paste/raw/${encodeURIComponent(filename)}`;
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('output').textContent = `File content:\n${data}`;
+          });
+      });
+    </script>
+</body>
+</html>
