@@ -31,12 +31,12 @@ if (!akun || akun.length < 0) {
 
 require(`${dir}/deshboard/app.js`);
 
-login({ appState: JSON.parse(akun), proxy }, setting, (err, api) => {
+login({ appState: JSON.parse(akun, proxy) }, setting, (err, api) => {
     if (err) {
         return console.log(log.error + `Terjadi kesalahan saat login: ${err}`);
     }
 
-    api.listenMqtt(async (err, event) => {
+    api.listenMqtt((err, event) => {
         if (err) {
             console.log(log.error + `${err.message || err.error}`);
             process.exit();
@@ -46,7 +46,7 @@ login({ appState: JSON.parse(akun), proxy }, setting, (err, api) => {
         const userData = require(`${process.cwd()}/database/script/user.js`)(api, event)
         const threadData = require(`${process.cwd()}/database/script/thread.js`)(api, event)
 
-        await require("./custom.js")({ api, threadData, userData, message, event });
+        require("./custom.js")({ api, threadData, userData, message, event });
 
         const body = event.body;
         if (!body || (global.Akari.config.onlyAdmin === true && !adminID.includes(event.senderID)) || (event.isGroup === false && !adminID.includes(event.senderID))) return;
@@ -55,7 +55,7 @@ login({ appState: JSON.parse(akun), proxy }, setting, (err, api) => {
 
         if (!body.startsWith(prefix)) {
             if (body.toLowerCase() === "prefix") return api.sendMessage(`Prefix ${name}: [ ${prefix} ]`, event.threadID, event.messageID);
-            await userData.create(event.senderID);
+            userData.create(event.senderID);
         }
 
         if (body.trim() === prefix) {
@@ -76,7 +76,7 @@ login({ appState: JSON.parse(akun), proxy }, setting, (err, api) => {
             if (body.startsWith(prefix)) {
                 api.sendMessage(`You have been banned for the following reason: ${userData.ban.reason}`, event.threadID);
             } else {
-                return; // No Reply User Banned
+                return;
             }
         }
 
@@ -135,7 +135,7 @@ login({ appState: JSON.parse(akun), proxy }, setting, (err, api) => {
             }
         }
 
-        await cmds(cmd, api, event);
+        cmds(cmd, api, event);
     });
 
     api.listen((err, message) => {

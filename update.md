@@ -7,3 +7,7 @@
 - ***bot/login/login.js***: new file method login
 - ***bot/hanler/config.js***: new file
 - ***deshboard/app.js***: New deshboard file Login and pastebin
+
+## 📦 Version 1.2.17
+### ⬆️ Update info
+- ***all Files** Fix Error

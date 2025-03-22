@@ -4,7 +4,7 @@ const express = require('express'),
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
-const PORT = global.Akari.serverPort || process.PORT || 3000;
+const PORT = global.Akari.config.serverPort || process.PORT || 3000;
 
 const apirouter = require('./routes/api.js')
 const mainrouter = require('./routes/mainrouter.js')
@@ -31,9 +31,9 @@ app.use((req, res) => {
 
 app.listen(PORT, (error) => {
 	if (!error)
-		console.log("APP LISTEN TO PORT " + PORT)
+		console.log(global.Akari.info('SERVER') + "APP LISTEN TO PORT " + PORT)
 	else
-		console.log("ERROR OCCUIRED")
+		console.log(global.Akari.log.error + "ERROR OCCUIRED")
 });
 
 module.exports = app

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment-timezone');
 const axios = require('axios');
-const { prefix, name, language, admin, config: a, host, port, serverPort, onlyAdmin, timezone, userAgent, antiinbox } = require('./config');
+const { prefix, name, language, admin, config: a, host, port, serverPort, onlyAdmin, timezone, userAgent, antiinbox, setting } = require('./config');
 const { version } = require('./package.json');
 const now = moment.tz(timezone);
 const tanggal = now.format('YYYY-MM-DD');
@@ -21,7 +21,8 @@ global.Akari = {
     adminID: admin,
     onlyAdmin: onlyAdmin,
     language: language,
-    antiinbox: antiinbox
+    antiinbox: antiinbox,
+    setting
   },
   log: log,
   info: info,

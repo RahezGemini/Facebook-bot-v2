@@ -10,7 +10,6 @@ const moment = require("moment-timezone");
 const mimeDB = require("mime-db");
 const _ = require("lodash");
 const { google } = require("googleapis");
-const ora = require("ora");
 const regCheckURL = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 class CustomError extends Error {
